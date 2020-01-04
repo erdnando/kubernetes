@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-a
+  labels:
+    app: front-a
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: front-a
+  template:
+    metadata:
+      labels:
+        app: front-a
+    spec:
+      containers:
+      - name: front-a
+        image: erdnando/front-fintech:latest
+        ports:
+        - containerPort: 80

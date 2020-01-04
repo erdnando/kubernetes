@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-a
+  labels:
+    app: backend-a
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-a
+  template:
+    metadata:
+      labels:
+        app: backend-a
+    spec:
+      containers:
+      - name: backend-a
+        image: erdnando/backend-fintech
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        - containerPort: 9990
+        livenessProbe:
+          httpGet:
+            path: /Aplicacion/livenessProbe
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /Aplicacion/readynessProbe
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        env:
+        - name: URL-BACKEND-FINTECH
+          valueFrom:
+            secretKeyRef:
+              name: credenciales-backend-fintech
+              key: URL-BACKEND-FINTECH
+        - name: USERDB
+          valueFrom:
+            secretKeyRef:
+              name: credenciales-backend-fintech
+              key: USERDB
+        - name: PWDDB
+          valueFrom:
+            secretKeyRef:
+              name: credenciales-backend-fintech
+              key: PWDDB

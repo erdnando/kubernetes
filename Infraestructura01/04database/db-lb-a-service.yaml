@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  db-lb-a
+  labels:
+    app: db-lb-a
+spec:
+  selector:
+    app:  db-a
+  type:  LoadBalancer
+  ports:
+  - protocol: "TCP"
+    # Port accessible inside cluster
+    port: 3306
+    # Port to forward to inside the pod
+    targetPort: 3306
+    # Port accessible outside cluster
+    nodePort: 30201

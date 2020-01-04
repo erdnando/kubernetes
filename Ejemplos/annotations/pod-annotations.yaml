@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    k8s-app: web
+    environment: testing
+  annotations:
+    note: "This site is under construction"
+    misDatos:
+      nombre:miguel
+      apellido:rodriguez
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80

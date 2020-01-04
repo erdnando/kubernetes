@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+kind: Ingress
+metadata:
+  name: bus-ingress
+  annotations:
+     #nginx.ingress.kubernetes.io/ssl-redirect: \"false\"
+     #kubernetes.io/ingress.class: "nginx"
+     #nginx.ingress.kubernetes.io/add-base-url: "false"
+     nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: mx.com.smi.services
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: front-lb-a
+          servicePort: 80
+      - path: /fintech
+        backend:
+          serviceName: front-lb-a
+          servicePort: 80
+      - path: /v2/*
+        backend:
+          serviceName: front-lb-b
+          servicePort: 80

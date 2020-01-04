@@ -1,0 +1,15 @@
+frontend
+http://mx.com.smi.services/fintech
+
+
+backend
+http://mx.com.smi.services:30101/
+http://mx.com.smi.services:30102/console/App.html#home
+http://mx.com.smi.services:30101/Aplicacion/aplicacion
+
+
+
+
+$ helm repo add presslabs https://presslabs.github.io/charts
+
+$ helm install presslabs/mysql-operator --name mysql-operator

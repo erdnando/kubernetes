@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-a
+  labels:
+    app: jenkins-a
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jenkins-a
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jenkins-a
+    spec:
+      containers:
+      - name: jenkins-a
+        image: erdnando/jenkins-fintech
+        ports:
+        - containerPort: 8080
+        - containerPort: 50000
+        volumeMounts:
+          - name: jenkins-home
+            mountPath: /var/jenkins_home
+      volumes:
+        - name: jenkins-home
+          persistentVolumeClaim:
+            claimName: jenkins-pvc-claim

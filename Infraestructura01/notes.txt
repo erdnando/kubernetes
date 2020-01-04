@@ -1,0 +1,292 @@
+
+cat /etc/os-release
+
+watch -n1 kubectl get all
+==================================================================================================================
+                                 START
+minikube config set memory 12228
+minikube config set cpus 4
+minikube config set disk-size 60000MB
+minikube config set vm-driver virtualbox
+minikube delete
+minikube start
+
+minikube addons list
+minikube addons enable metrics-server
+kubectl get apiservice
+
+minikube ssh
+ minikube addons list
+ minikube dashboard
+ minikube stop
+minikube ip
+kubectl logs -f mysql-cluster-mariadb-master-0 -c metrics
+
+ kubectl delete -f pod-replica-set.yaml 
+
+kubectl delete rs frontend --cascade=false
+kubectl delete pods --all
+
+watch -n1 kubectl get all
+ nginx:1.7.9
+
+kubectl set image deployment/nginx-deployment nginx=nginx:1.7.9 ; kubectl rollout status deployment/nginx-deployment
+kubectl rollout undo deployment/nginx-deployment ; kubectl rollout status deployment/nginx-deployment
+ kubectl rollout history deployment/nginx-deployment
+ kubectl rollout history deployment/nginx-deployment --revision=5
+
+=============================================================================================================00
+ClusterIp: expone el servicio en una ip interna del cluster,Estoharia que el servicio solo estuviera accesibledesde DENTROdel cluster
+para otros pods.
+
+NodePort: expone el servicio en cada ip de los nodos, en un puerto estatico
+
+LoadBalancer: Expone el servicio externament eusando un load balancer deun proveedor de cloud
+
+kubectl get pods -o wide
+kubectl describe pod nginx
+kubectl apply -f pod-test1.yml
+kubectl delete -f pod-test1.yml
+kubectl get all
+
+minikube service hello-node --url
+minikube service db-fintech-ha-cl-mariadb --url
+
+
+kubectl port-forward nginx 8080:80
+
+kubectl get pods -o wide --show-labels
+kubectl delete rc nginx
+kubectl apply -f pod-replica.yaml 
+htop
+
+kubectl describe pod nginx-z9xlv       172.17.0.3
+
+
+
+=========================================================================================================================
+                             Persistent Volumes
+kubectl apply -f pv.yaml
+
+kubectl get pv
+
+kubectl apply -f pv-claim.yaml
+kubectl get pvc
+=========================================================================================================================
+                                Configmap
+
+kubectl get cm
+ 
+kubectl create configmap test-cm --from-literal variable1=valor1
+
+kubectl describe cm test-cm
+
+kubectl delete cm test-cm
+
+kubectl create cm nginx-config-dir --from-file=nginx-config-map
+
+
+=========================================================================================================================
+                                 Secrets
+
+kubectl get secrets
+
+kubectl get secrets -n kube-system
+
+kubectl create secret generic credenciales --from-file=./username.txt --from-file=password.txt
+
+kubectl describe secret credenciales
+
+kubectl get secret credenciales -o yaml
+
+> 
+apiVersion: v1
+data:
+  password.txt: MTIzNTZhYmNk
+  username.txt: YWRtaW4=
+kind: Secret
+metadata:
+  creationTimestamp: "2019-12-14T19:59:36Z"
+  name: credenciales
+  namespace: default
+  resourceVersion: "115166"
+  selfLink: /api/v1/namespaces/default/secrets/credenciales
+  uid: 98ebaaf3-04e0-45fe-9cae-5f6072db8983
+type: Opaque
+
+
+kubectl create secret generic ssh-key-secret --from-file=/home/erdnando/.ssh/id_rsa --from-file=p/home/erdnando/.ssh/id_rsa.pub
+
+
+=========================================================================================================================                                 
+                      limits
+
+apt-get install stress
+
+stress -m 1
+
+=========================================================================================================================
+                       Horizontal Pod autoscaler (HPA)
+
+minikube addons enable metrics-server
+kubectl apply -f hpa.yaml 
+
+watch -n1 kubectl get pod,hpa
+ stress -c 1 -t 60
+
+==========================================================================================================================
+                        Annotations
+
+kubectl get all --show-labels
+
+kubectl delete pod --selector k8s-app=web
+
+kubectl get pod nginx -o json
+
+==========================================================================================================================
+
+https://metallb.universe.tf/installation/
+https://metallb.universe.tf/configuration/
+
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.3/manifests/metallb.yaml
+
+kubectl expose deployment hello-node --type=LoadBalancer
+kubectl get namespace
+kubectl delete namespace metallb-system
+
+kubectl expose deployment hello-node --type=LoadBalancer
+https://www.bogotobogo.com/DevOps/DevOps-Kubernetes-1-Running-Kubernetes-Locally-via-Minikube.php
+
+aplicar config-lb.yaml con el rango de ips
+minikube service nginx-lb --url
+kubectl logs -p db-a-99d469464-dwlt9
+Mantenerse en el namespace
+
+crear un service de tipo load balancer como service/pod-service.yaml
+https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
+
+ kubectl patch pv mysql-pv-volume -p '{"metadata":{"finalizers":null}}'
+  kubectl patch pvc mysql-pv-claim -p '{"metadata":{"finalizers":null}}'
+
+==========================================================================================================================
+
+
+Kubernetes has three Object Types you should know about:
+
+Pods - runs one or more closely related containers
+Services - sets up networking in a Kubernetes cluster
+Deployment - Maintains a set of identical pods, ensuring that they have the correct config and that the right number of them exist.
+Pods:
+
+Runs a single set of containers
+Good for one-off dev purposes
+Rarely used directly in production
+Deployment:
+
+Runs a set of identical pods
+Monitors the state of each pod, updating as necessary
+Good for dev
+
+
+
+nginx common path ->  /usr/share/nginx/html/
+
+
+
+==============================================================0
+mysql
+
+sudo mysql
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+
+mysql -u root -p
+
+Welcome$1
+
+http://patorjk.com/software/taag/#p=display&f=Graffiti&t=2019
+
+https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html
+
+
+
+AWS
+ID de clave de acceso:
+AKIAJGB6T4XYV6Y42GWQ
+Clave de acceso secreta:
++ZX3letgDb19aXh/kPCUQWvtBzxzuvHdmMBALBq0
+
+
+
+docker build -t hello-node:v1 .    <---punto
+docker tag hello-node:v1 erdnando/hello-node:latest
+crear en docker hub repositorio con el nombre deseado  
+docker push erdnando/hello-node:latest
+
+pkill node
+
+node server.js
+
+//---------------------------------------------------------------------------------------
+
+helm install --name db-fintech-cluster -f db-cluster-deployment.yaml stable/mariadb
+
+kubectl scale --replicas=0 statefulset.apps/db-fintech-cluster-slave
+
+helm delete db-fintech-cluster
+
+helm ls --all
+
+helm del --purge db-fintech-cluster
+
+//------------------------------------------------------------------------------------------
+
+Services:
+
+  echo Master: db-fintech-ha-cl-mariadb.default.svc.cluster.local:3306
+  echo Slave:  db-fintech-ha-cl-mariadb-slave.default.svc.cluster.local:3306
+
+Administrator credentials:
+
+  Username: root
+  Password : $(kubectl get secret --namespace default db-fintech-ha-cl-mariadb -o jsonpath="{.data.mariadb-root-password}" | base64 --decode)
+
+To connect to your database:
+
+  1. Run a pod that you can use as a client:
+
+      kubectl run db-fintech-ha-cl-mariadb-client --rm --tty -i --restart='Never' --image  docker.io/bitnami/mariadb:10.3.21-debian-9-r0 --namespace default --command -- bash
+
+  2. To connect to master service (read/write):
+
+      mysql -h db-fintech-ha-cl-mariadb.default.svc.cluster.local -uroot -p curso
+
+  3. To connect to slave service (read-only):
+
+      mysql -h db-fintech-ha-cl-mariadb-slave.default.svc.cluster.local -uroot -p curso
+
+To upgrade this helm chart:
+
+  1. Obtain the password as described on the 'Administrator credentials' section and set the 'rootUser.password' parameter as shown below:
+
+      ROOT_PASSWORD=$(kubectl get secret --namespace default db-fintech-ha-cl-mariadb -o jsonpath="{.data.mariadb-root-password}" | base64 --decode)
+      helm upgrade db-fintech-ha-cl stable/mariadb --set rootUser.password=$ROOT_PASSWORD
+
+      //--------------------------------------------------------------------------------------------------------
+
+
+
+      For Ubuntu 19.04 and Oracle JDK 11:
+
+sudo rm /var/lib/dpkg/info/oracle-java11-installer-local.postinst -f<br>
+sudo dpkg --configure oracle-java11-installer-local
+
+
+
+
+docker inspect my-vol
+docker volume create my-vol
+docker create -P --name web01 ubuntu_nginx:latest
+docker create -P --mount source=my-vol,target=/var/www/html --name web02 ubuntu_nginx:latest
+docker exec -it web02 bash
+kubectl exec -it nginx-z9xlv bash   <-----

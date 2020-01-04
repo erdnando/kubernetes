@@ -1,0 +1,3 @@
+/home/erdnando/Documents/kubernetes/Infraestructura01/00dokerFiles/03javaapp/aplicacion/aplicacion con BD/src/main/java/com/inigoserrano/docker/aplicacion/ReadynessProbe.java
+/home/erdnando/Documents/kubernetes/Infraestructura01/00dokerFiles/03javaapp/aplicacion/aplicacion con BD/src/main/java/com/inigoserrano/docker/aplicacion/LivenessProbe.java
+/home/erdnando/Documents/kubernetes/Infraestructura01/00dokerFiles/03javaapp/aplicacion/aplicacion con BD/src/main/java/com/inigoserrano/docker/aplicacion/Aplicacion.java
