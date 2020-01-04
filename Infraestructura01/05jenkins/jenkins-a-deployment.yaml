@@ -5,7 +5,7 @@ metadata:
   labels:
     app: jenkins-a
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: jenkins-a
@@ -29,3 +29,5 @@ spec:
         - name: jenkins-home
           persistentVolumeClaim:
             claimName: jenkins-pvc-claim
+
+#minikube ssh sudo chown 1000 /data/jenkins -pv 
