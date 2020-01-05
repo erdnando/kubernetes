@@ -1,5 +1,9 @@
 FROM node:8.16.2 as builder
 
+
+#https://itnext.io/building-docker-images-from-private-git-repositories-using-ssh-login-433edf5a18f2
+
+
 COPY github_key .
 RUN eval $(ssh-agent) && \
     ssh-add github_key && \

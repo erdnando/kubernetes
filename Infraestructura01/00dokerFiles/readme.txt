@@ -1,3 +1,7 @@
+# minikube ssh sudo chown 1000 /data/docker-pvy
+#minikube ssh sudo chown 1000 /data/jenkins-pvy
+#8472df88cede49f492af6de28f963961
+
 watch -n1 kubectl get all
 
 
