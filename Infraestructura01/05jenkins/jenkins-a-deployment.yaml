@@ -29,9 +29,8 @@ spec:
             mountPath: /var/run/docker.sock
       volumes:
         - name: jenkins-home
-          hostPath:
-            # directory location on host
-            path: /var/jenkins_home
+          persistentVolumeClaim:
+            claimName: jenkins-pvc-claim
         - name: docker-sock
           hostPath:
             # directory location on host
@@ -40,8 +39,11 @@ spec:
 #en minikube ssh dar permisos:
 #  sudo chown 1000 /var/jenkins_home/
 
+ #hostPath:
+            # directory location on host
+ #           path: /var/jenkins_home
 
-#ae32eb3d6f944584ab23a298ea479f99
+#4c56b07756f24cb7a2ee61887abe6c70
 #https://github.com/wardviaene/docker-demo.git
 #volumeMounts:
 #          - name: jenkins-home
