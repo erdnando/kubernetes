@@ -1,6 +1,13 @@
+
+
 #https://github.com/bitnami/charts.git
 
+#choco install kubernetes-helm      to windows
+
+#helm repo add stable https://kubernetes-charts.storage.googleapis.com
+#helm repo add presslabs https://presslabs.github.io/charts
 #helm install mysql-cluster-mariadb stable/mariadb -f db-cluster-deployment.yaml
+
 #helm uninstall mysql-cluster-mariadb
 #kubectl logs -f mysql-cluster-mariadb-master-0 -c mariadb
 #kubectl logs -f mysql-cluster-mariadb-master-0 -c metrics
