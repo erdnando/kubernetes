@@ -1,3 +1,30 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: jenkins-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/var/jenkins_home"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-pvc-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,21 +62,30 @@ spec:
           hostPath:
             # directory location on host
             path: /var/run/docker.sock
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  jenkins-lb-a
+  labels:
+    app: jenkins-lb-a
+spec:
+  selector:
+    app:  jenkins-a
+  type:  LoadBalancer
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    nodePort: 30301
+  - name: admin
+    port: 50000
+    targetPort: 50000
+    nodePort: 30302
 
+    
 #en minikube ssh dar permisos:
 #  sudo chown 1000 /var/jenkins_home/
-
- #hostPath:
-            # directory location on host
- #           path: /var/jenkins_home
-
-#4c56b07756f24cb7a2ee61887abe6c70
 #https://github.com/wardviaene/docker-demo.git
-#volumeMounts:
-#          - name: jenkins-home
-#            mountPath: /var/jenkins_home
-#      volumes:
-#        - name: jenkins-home
-#          persistentVolumeClaim:
-#            claimName: jenkins-pvc-claim
+
 #minikube ssh sudo chown 1000 /data/jenkins -pv 
