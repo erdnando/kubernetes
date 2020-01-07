@@ -19,3 +19,22 @@ spec:
         image: erdnando/front-fintech:latest
         ports:
         - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  front-lb-a
+  labels:
+    app: front-lb-a
+spec:
+  selector:
+    app:  front-a
+  type:  LoadBalancer
+  ports:
+  - protocol: "TCP"
+    # Port accessible inside cluster
+    port: 80
+    # Port to forward to inside the pod
+    targetPort: 80
+    # Port accessible outside cluster
+    nodePort: 30001        
