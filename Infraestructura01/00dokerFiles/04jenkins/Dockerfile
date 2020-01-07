@@ -9,12 +9,13 @@ RUN mkdir -p /tmp/download && \
  groupadd -g 999 docker && \
  usermod -aG staff,docker jenkins
 
+
+#VOLUME /var/run/docker.sock/
+#/var/jenkins_home/
+
 USER jenkins
 
-#EXPOSE 8080
-#EXPOSE 50000
 
-#VOLUME /var/jenkins_home/
 
 
 #make repository in docker-hub : erdnando/jenkins-fintech
