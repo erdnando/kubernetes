@@ -89,3 +89,5 @@ spec:
 #https://github.com/wardviaene/docker-demo.git
 
 #minikube ssh sudo chown 1000 /data/jenkins -pv 
+
+#c67921bf4959432a843aa9ba8a158ea8
