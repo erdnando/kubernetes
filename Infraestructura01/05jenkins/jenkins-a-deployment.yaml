@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/var/jenkins_home"
+    path: "/data/jenkins_home"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -84,9 +84,13 @@ spec:
     
 #en minikube ssh dar permisos:
 #  sudo chown 1000 /var/jenkins_home/
+
+#sudo chown 1000 /data/jenkins_home/   <---ok in ubuntu
+
+
 #https://github.com/erdnando/docker-demo.git
 #erdnando/docker-nodejs-demo
 #minikube ssh sudo chown 1000 /data/jenkins -pv 
 
 #c67921bf4959432a843aa9ba8a158ea8
-#70acaaeaf89e4726938a82342f44143e
+#9226204a7cda49bca8f5978a3f96d06b
