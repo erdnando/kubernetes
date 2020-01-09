@@ -10,8 +10,6 @@ RUN mkdir -p /tmp/download && \
  usermod -aG staff,docker jenkins
 
 
-RUN chmod -R 777 /var/jenkins_home/
-RUN chown 1000 /var/jenkins_home/
 
 USER jenkins
 
