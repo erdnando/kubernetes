@@ -1,7 +1,7 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: jenkins-pv-volume
+  name: jenkins-pv-volumey
   labels:
     type: local
 spec:
@@ -11,12 +11,12 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/var/jenkins_home"
+    path: "/data/jenkins_home"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jenkins-pvc-claim
+  name: jenkins-pvc-claimy
 spec:
   storageClassName: manual
   accessModes:
@@ -36,8 +36,6 @@ spec:
   selector:
     matchLabels:
       app: jenkins-a
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -57,7 +55,7 @@ spec:
       volumes:
         - name: jenkins-home
           persistentVolumeClaim:
-            claimName: jenkins-pvc-claim
+            claimName: jenkins-pvc-claimy
         - name: docker-sock
           hostPath:
             # directory location on host
@@ -86,8 +84,9 @@ spec:
     
 #en minikube ssh dar permisos:
 #  sudo chown 1000 /var/jenkins_home/
-#https://github.com/wardviaene/docker-demo.git
-
+#https://github.com/erdnando/docker-demo.git
+#erdnando/docker-nodejs-demo
 #minikube ssh sudo chown 1000 /data/jenkins -pv 
 
 #c67921bf4959432a843aa9ba8a158ea8
+#70acaaeaf89e4726938a82342f44143e
