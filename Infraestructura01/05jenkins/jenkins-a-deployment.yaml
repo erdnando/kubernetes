@@ -86,7 +86,7 @@ spec:
 #  sudo chown 1000 /var/jenkins_home/
 
 #sudo chown 1000 /data/jenkins_home/   <---ok in ubuntu
-
+#ok
 
 #https://github.com/erdnando/docker-demo.git
 #erdnando/docker-nodejs-demo
