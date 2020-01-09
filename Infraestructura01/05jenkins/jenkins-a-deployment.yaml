@@ -1,7 +1,7 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: jenkins-pv-volumey
+  name: jenkins-pv-volume0
   labels:
     type: local
 spec:
@@ -11,12 +11,12 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/data/jenkins_home"
+    path: "/var/jenkins_home"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jenkins-pvc-claimy
+  name: jenkins-pvc-claim0
 spec:
   storageClassName: manual
   accessModes:
@@ -49,13 +49,13 @@ spec:
         - containerPort: 50000
         volumeMounts:
           - name: jenkins-home
-            mountPath: /var/jenkins_home
+            mountPath: /var/jenkins_home/
           - name: docker-sock
             mountPath: /var/run/docker.sock
       volumes:
         - name: jenkins-home
           persistentVolumeClaim:
-            claimName: jenkins-pvc-claimy
+            claimName: jenkins-pvc-claim0
         - name: docker-sock
           hostPath:
             # directory location on host
