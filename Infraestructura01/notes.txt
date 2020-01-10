@@ -24,6 +24,7 @@ kubectl logs -f mysql-cluster-mariadb-master-0 -c metrics
 
  kubectl delete -f pod-replica-set.yaml 
  #kubectl apply -f front-a-deployment.yaml --v=6
+ kubectl get pod nginx -o json
 
 kubectl delete rs frontend --cascade=false
 kubectl delete pods --all
