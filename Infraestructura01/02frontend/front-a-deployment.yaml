@@ -37,4 +37,4 @@ spec:
     # Port to forward to inside the pod
     targetPort: 80
     # Port accessible outside cluster
-    nodePort: 30001        
+    nodePort: 30001
