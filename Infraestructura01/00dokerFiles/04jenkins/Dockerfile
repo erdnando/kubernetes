@@ -22,3 +22,12 @@ USER jenkins
 #push
 #docker push erdnando/jenkins-fintech:latest
 #en windows
+
+
+
+ #add to docker daemon settings --> mx.com.smi.services:30402
+ #docker login -u admin -p admin mx.com.smi.services:30402
+ 
+ #docker pull erdnando/jenkins-fintech
+ #docker tag erdnando/jenkins-fintech mx.com.smi.services:30402/jenkins-fintech:latest
+ #docker push mx.com.smi.services:30402/jenkins-fintech:latest

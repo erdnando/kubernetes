@@ -1,0 +1,100 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nexus-pv-volume0
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/nexus_home"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nexus-pvc-claim0
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nexus-a
+  labels:
+    app: nexus-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus-a
+  template:
+    metadata:
+      labels:
+        app: nexus-a
+    spec:
+      containers:
+      - name: nexus-a
+        image: sonatype/nexus3
+        imagePullPolicy: Always
+        env:
+          - name: MAX_HEAP
+            value: "1200m"
+          - name: MIN_HEAP
+            value: "1200m"
+        ports:
+        - containerPort: 8081
+        - containerPort: 5000
+        volumeMounts:
+          - name: nexus-data-volume
+            mountPath: /nexus-data
+      volumes:
+        - name: nexus-data-volume
+          persistentVolumeClaim:
+            claimName: nexus-pvc-claim0
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  nexus-lb-a
+  labels:
+    app: nexus-lb-a
+spec:
+  selector:
+    app:  nexus-a
+  type:  LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8081
+    nodePort: 30401
+  - name: docker
+    port: 5000
+    targetPort: 5000
+    nodePort: 30402
+
+    
+#en minikube ssh dar permisos:
+#  sudo chown 1000 /var/jenkins_home/
+
+#sudo chown 1000 /data/jenkins_home/   <---ok in ubuntu
+#ok
+
+#https://github.com/erdnando/docker-demo.git
+#erdnando/docker-nodejs-demo
+#minikube ssh sudo chown 1000 /data/jenkins -pv 
+
+#c67921bf4959432a843aa9ba8a158ea8
+#9226204a7cda49bca8f5978a3f96d06b
+
+#https://blog.sonatype.com/kubernetes-recipe-sonatype-nexus-3-as-a-private-docker-registry
+#on minikube ssh
+#set sudo chmod -R 777 to /data/nexus_home

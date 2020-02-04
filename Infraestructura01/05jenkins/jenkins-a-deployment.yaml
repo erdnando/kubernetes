@@ -41,9 +41,13 @@ spec:
       labels:
         app: jenkins-a
     spec:
+      imagePullSecrets:
+        - name: pullsecret
       containers:
       - name: jenkins-a
-        image: erdnando/jenkins-fintech
+         #from docker hub  erdnando/jenkins-fintech
+        #from private repo    mx.com.smi.services:30402/jenkins-fintech:latest
+        image: mx.com.smi.services:30402/jenkins-fintech:latest
         ports:
         - containerPort: 8080
         - containerPort: 50000

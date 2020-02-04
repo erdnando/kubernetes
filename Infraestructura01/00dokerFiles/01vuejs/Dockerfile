@@ -32,6 +32,14 @@ RUN chmod -R 777 /usr/share/nginx/html/img
 
 
 
+
+
+
+EXPOSE 80
+#Copy default nginx configuration
+COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
+
+
 #docker rmi image erdnando/front-fintech
 #build
 #docker build -t erdnando/front-fintech:latest .
@@ -40,7 +48,19 @@ RUN chmod -R 777 /usr/share/nginx/html/img
 #push
 #docker push erdnando/front-fintech:latest
 
+ 
+# add to docker daemon settings --> mx.com.smi.services:30402
+ #docker login -u admin -p admin mx.com.smi.services:30402
 
-EXPOSE 80
-#Copy default nginx configuration
-COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
+ #docker pull erdnando/front-fintech
+ #docker tag erdnando/front-fintech mx.com.smi.services:30402/front-fintech:latest
+ #docker push mx.com.smi.services:30402/front-fintech:latest
+ 
+ 
+#{
+# "registry-mirrors": [],
+# "debug": true,
+# "experimental": true,
+# "insecure-registries": [
+#   "mx.com.smi.services:30402"
+# ]

@@ -16,9 +16,14 @@ spec:
     spec:
       containers:
       - name: front-a
-        image: erdnando/front-fintech:latest
+        #from docker hub  erdnando/front-fintech:latest
+        #from private repo    mx.com.smi.services:30402/front-fintech:latest
+        image: mx.com.smi.services:30402/front-fintech:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: pullsecret
 ---
 kind: Service
 apiVersion: v1

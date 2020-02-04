@@ -43,8 +43,12 @@ spec:
       labels:
         app: db-a
     spec:
+      imagePullSecrets:
+        - name: pullsecret
       containers:
-      - image: erdnando/db-fintech
+        #from docker hub  erdnando/db-fintech
+        #from private repo    mx.com.smi.services:30402/db-fintech:latest
+      - image: mx.com.smi.services:30402/db-fintech:latest
         name: db-a
         ports:
         - containerPort: 3306

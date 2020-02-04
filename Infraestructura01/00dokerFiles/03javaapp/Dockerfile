@@ -23,3 +23,11 @@ CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0
 #docker run -it -p 8080:80 --name backend-fintech backend/db-fintech
 #push
 #docker push erdnando/backend-fintech:latest
+
+
+ #add to docker daemon settings --> mx.com.smi.services:30402
+ #docker login -u admin -p admin mx.com.smi.services:30402
+ 
+ #docker pull erdnando/backend-fintech
+ #docker tag erdnando/backend-fintech mx.com.smi.services:30402/backend-fintech:latest
+ #docker push mx.com.smi.services:30402/backend-fintech:latest

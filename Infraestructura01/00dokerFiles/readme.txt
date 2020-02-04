@@ -27,6 +27,7 @@ minikube config set disk-size 60000MB
 minikube config set vm-driver virtualbox
 minikube delete
 minikube start
+minikube start --insecure-registry="mx.com.smi.services:30402"
 
 minikube addons enable metrics-server
 

@@ -27,9 +27,13 @@ spec:
       labels:
         app: backend-a
     spec:
+      imagePullSecrets:
+      - name: pullsecret
       containers:
       - name: backend-a
-        image: erdnando/backend-fintech
+        #from docker hub  erdnando/backend-fintech
+        #from private repo    mx.com.smi.services:30402/backend-fintech:latest
+        image: mx.com.smi.services:30402/backend-fintech:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
